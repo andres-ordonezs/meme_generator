@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meme Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/08e0f793db.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header class="main-header">
+    <h1 class="main-title">Meme Creator!</h1>
+    <h3 class="main-subtitle">Fill out the form to create your meme!</h3>
+  </header>
+  <section class="section-form">
+
+    <form action="method" class="form-container" id="form-container">
+
+      <div class="row lg-3 container">
+        <label for="imageUrl" class="col-sm-2 col-form-label-lg">Image URL</label>
+        <div class="col-sm-10">
+          <input type="url" class="form-control" id="imageUrl" required>
+        </div>
+      </div>
+
+      <div class="row lg-3 container">
+        <label for="inputTextTop" class="col-sm-2 col-form-label-lg">Text On Top</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputTextTop" required>
+        </div>
+      </div>
+
+      <div class="row lg-3 container">
+        <label for="inputTextBottom" class="col-sm-2 col-form-label-lg">Text On Bottom</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputTextBottom" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg">Add Meme</button>
+    </form>
+  </section>
+  <section class="section-memes" id="section-memes">
+
+  </section>
+
+  <script>
+    let handleFormSubmission = (event) => {
+      event.preventDefault();
+      let formElement = document.getElementById("form-container");
+      /* Gets the top and bottom text elements from the form */
+      let memeSectionElement = document.getElementById("section-memes");
+      let backgroundImageUrl = document.getElementById("imageUrl").value;
+      let inputTextTop = document.getElementById("inputTextTop").value;
+      let inputTextBottom = document.getElementById("inputTextBottom").value;
+
+      /* Creates the meme Card and its id */
+      let memeCard = document.createElement('div');
+      var cardId = 'card' + Math.floor(Math.random() * 1000);
+      memeCard.id = cardId;
+
+      memeCard.addEventListener('click', function () {
+        removeCard(cardId);
+      });
+
+      /* Creates top and bottom text elements + overlay*/
+
+      let topText = document.createElement('h1');
+      let bottomText = document.createElement('h1');
+      let overlay = document.createElement('div');
+
+      let deleteIcon = document.createElement('div');
+      let deleteIconI = document.createElement('i');
+      deleteIcon.classList.add('delete-icon');
+      deleteIconI.classList.add('fa-solid');
+      deleteIconI.classList.add('fa-x');
+
+
+
+      deleteIcon.appendChild(deleteIconI);
+      overlay.appendChild(deleteIcon);
+
+
+      overlay.classList.add('overlay');
+
+
+      topText.innerHTML = inputTextTop.toUpperCase();
+      bottomText.innerHTML = inputTextBottom.toUpperCase();
+
+      memeCard.classList.add('meme-card');
+      memeCard.style.backgroundImage = `url('${backgroundImageUrl}')`;
+
+
+      memeCard.appendChild(topText);
+      memeCard.appendChild(overlay);
+      memeCard.appendChild(bottomText);
+
+      memeSectionElement.appendChild(memeCard);
+
+      formElement.reset();
+    };
+
+    let removeCard = (cardId) => {
+      let memeSectionElement = document.getElementById("section-memes");
+      let cardElement = document.getElementById(cardId);
+      memeSectionElement.removeChild(cardElement);
+    };
+
+    let formElement = document.querySelector("form");
+    formElement.addEventListener("submit", handleFormSubmission);
+
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
